@@ -1,13 +1,9 @@
-import Header from './header.jsx'
-import Footer from './Footer.jsx'
 
+import Card from './Card.jsx'
 function App() {
-      return(
-        <>
-        <Header></Header>
-        <Footer></Footer>
-        </>
-      )
+    return (
+      <Card/>
+    )
 }
 
 export default App
