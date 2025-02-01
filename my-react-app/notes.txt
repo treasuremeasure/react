@@ -1,0 +1,469 @@
+//Card component
+
+Card.jsx
+function Card() {
+    return(
+        <div className="card">
+            <img className="cardImage" src="https://via.placeholder.com/150" alt="profile picture"></img>
+            <h2 className="card-title">Orduhani Riza</h2>
+            <p className="card-text">I am studying Computer Science</p>
+        </div>
+    )
+}
+
+export default Card
+
+
+
+index.css
+.card {
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px;
+    padding: 20px;
+    text-align: center;
+    max-width: 250px;
+    display: inline-block;
+}
+
+.card .cardImage{
+    max-width: 60%;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.card .card-title {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    color: hsl(0, 0%, 20%)
+}
+
+.card .card-text {
+  font-family: Arial,  sans-serif;
+  color: hsl(0, 0%, 30%);
+}
+
+
+
+App.jsx
+
+import Card from './Card.jsx'
+function App() {
+    return (
+      <Card/>
+    )
+}
+
+export default App
+
+
+
+//css in react
+
+1 option - external
+
+in index.css write the traditional css config
+
+.button {
+    background-color: hsl(200, 100%, 50%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+2 option - modules
+
+create a component folder where .jsx and .css files will be located
+
+
+3 option - inline
+
+function Button() {
+
+    const styles = {
+        
+            backgroundColor: "hsl(200, 100%, 50%)",
+            color: "white",
+            padding: "10px 20px",
+            borderRadius: "4px",
+            cursor: "pointer"
+        
+        
+    }
+    return(
+        <button style={styles}>Click me</button>
+    );
+}
+
+export default Button
+
+
+//props = read-only properties that are shared between components. 
+          A parent component can send data to a child component.
+          <Component key=value />
+
+usefuls when there is a need to create a few the same component but with different values pairs
+
+app.jsx
+
+import Student from './Student.jsx'
+function App() {
+    return (
+      <Student name="Spongebob" age={30}  isStudent = {true}/>
+    )
+}
+
+export default App
+
+
+
+student.jsx
+function Student(props) {
+
+    return(
+        <div className="student">
+            <p>Name: {props.name}</p>
+            <p>Age: {props.age}</p>
+            <p>isStudent: {props.isStudent ? "Yes" : "No"}</p>
+        </div>
+    );
+}
+
+export default Student
+
+
+//proptypes = a mechanism that ensures that the passed value is of the correct datatype 
+              age: PropTypes.number
+
+
+import PropTypes from 'prop-types'
+
+function Student(props) {
+
+    return(
+        <div className="student">
+            <p>Name: {props.name}</p>
+            <p>Age: {props.age}</p>
+            <p>isStudent: {props.isStudent ? "Yes" : "No"}</p>
+        </div>
+    );
+}
+
+Student.propTypes = {
+    name: PropTypes.string,
+    age: PropTypes.number,
+    isStudent: PropTypes.boolean
+}
+
+export default Student
+
+
+
+//defaultProps = default values for props in case they are not 
+                 passed from the parent component
+
+
+
+import PropTypes from 'prop-types'
+
+function Student(props) {
+
+    return(
+        <div className="student">
+            <p>Name: {props.name}</p>
+            <p>Age: {props.age}</p>
+            <p>isStudent: {props.isStudent ? "Yes" : "No"}</p>
+        </div>
+    );
+}
+
+Student.propTypes = {
+    name: PropTypes.string,
+    age: PropTypes.number,
+    isStudent: PropTypes.boolean
+}
+
+Student.defaultProps = {
+    name: "Riza",
+    age: 22,
+    isStudent: true
+}
+
+export default Student
+
+
+//conditional rendering = allows you to control what gets rendered
+                          in your application based on certain 
+                          conditions 
+
+
+import PropTypes from 'prop-types'
+
+function UserGreeting(props) {
+    return (
+        props.isLoggedIn ? <h2>Welcome, {props.username}</h2> : <h2>Please log in to continue</h2>
+    )
+}
+
+UserGreeting.proptypes = {
+    isLoggedIn: PropTypes.bool,
+    username: PropTypes.string,
+}
+
+UserGreeting.defaultProps = {
+    username: "Guest"
+}
+
+export default UserGreeting
+
+
+//render lists
+
+function List() {
+    const fruits = ["apple", "orange", "banana", "coconut", "pineapple"];
+
+    return (fruits);
+}
+
+export default List
+
+this list will render inappropriately (result: appleorangebananacoconutpineapple)
+
+
+this one will work:
+
+function List() {
+    const fruits = ["apple", "orange", "banana", "coconut", "pineapple"];
+
+    const listItems = fruits.map(fruit => <li>{fruit}</li>);
+
+    return (<ol>{listItems}</ol>);
+}
+
+export default List
+
+
+
+//render arrays of objects
+
+Example 1
+function List() {
+    const fruits = [{id: 1, name: "apple", calories: 95}, 
+                    {id: 2, name: "orange", calories: 45}, 
+                    {id: 3, name: "banana", calories: 105}, 
+                    {id: 4, name:"coconut", calories: 159}, 
+                    {id: 5, name:"pineapple", calories: 37}];
+
+    fruits.sort((a, b) => a.name.localeCompare(b.name))  //Alphabetical 
+
+    const listItems = fruits.map(fruit => <li key={fruit.id}>
+                                             {fruit.name}: &nbsp;
+                                             <b>{fruit.calories}</b></li>);
+
+    return (<ol>{listItems}</ol>);
+}
+
+export default List
+
+
+Example 2
+function List() {
+    const fruits = [{id: 1, name: "apple", calories: 95}, 
+                    {id: 2, name: "orange", calories: 45}, 
+                    {id: 3, name: "banana", calories: 105}, 
+                    {id: 4, name:"coconut", calories: 159}, 
+                    {id: 5, name:"pineapple", calories: 37}];
+
+    fruits.sort((a, b) => a.name.localeCompare(b.name))  //Alphabetical 
+
+    const listItems = fruits.map(fruit => <li key={fruit.id}>
+                                             {fruit.name}: &nbsp;
+                                             <b>{fruit.calories}</b></li>);
+
+    return (<ol>{listItems}</ol>);
+}
+
+export default List
+
+Example 3
+
+function List() {
+    const fruits = [{id: 1, name: "apple", calories: 95}, 
+                    {id: 2, name: "orange", calories: 45}, 
+                    {id: 3, name: "banana", calories: 105}, 
+                    {id: 4, name:"coconut", calories: 159}, 
+                    {id: 5, name:"pineapple", calories: 37}];
+
+    const LowCalFruits = fruits.filter(fruit => fruit.calories > 100)
+
+    const listItems = LowCalFruits.map(fruit => <li key={fruit.id}>
+                                             {fruit.name}: &nbsp;
+                                             <b>{fruit.calories}</b></li>);
+
+    return (<ol>{listItems}</ol>);
+}
+
+export default List
+
+Example 4
+To make component reusable:
+
+
+import List from './List.jsx'
+
+function App() {
+
+    const fruits = [{id: 1, name: "apple", calories: 95}, 
+                    {id: 2, name: "orange", calories: 45}, 
+                    {id: 3, name: "banana", calories: 105}, 
+                    {id: 4, name:"coconut", calories: 159}, 
+                    {id: 5, name:"pineapple", calories: 37}];
+
+    const vegetables = [{id: 1, name: "celery", calories: 43}, 
+                    {id: 2, name: "carrot", calories: 67}, 
+                    {id: 3, name: "cucumber", calories: 105}, 
+                    {id: 4, name:"potato", calories: 52}, 
+                    {id: 5, name:"tomato", calories: 12}];
+    return (
+      <>
+      <List items={fruits} category="Fruits"/>
+      <List items={vegetables} category="Vegetables"/>
+      </>
+    )
+}
+
+export default App
+
+
+Example 5
+If arrays is empty return null:
+
+
+import List from './List.jsx'
+
+function App() {
+
+    const fruits = [{id: 1, name: "apple", calories: 95}, 
+                    {id: 2, name: "orange", calories: 45}, 
+                    {id: 3, name: "banana", calories: 105}, 
+                    {id: 4, name:"coconut", calories: 159}, 
+                    {id: 5, name:"pineapple", calories: 37}];
+
+    const vegetables = [{id: 1, name: "celery", calories: 43}, 
+                    {id: 2, name: "carrot", calories: 67}, 
+                    {id: 3, name: "cucumber", calories: 105}, 
+                    {id: 4, name:"potato", calories: 52}, 
+                    {id: 5, name:"tomato", calories: 12}];
+    return (
+      <>
+      {fruits.length > 0 ? <List items={fruits} category="Fruits"/> : null}
+      {vegetables.length > 0 ? <List items={vegetables} category="Vegetables"/> : null}
+      </>
+    )
+}
+
+export default App
+
+
+//click events
+
+function Button() {
+
+    const handleClick = (e) => e.target.textContent = "OUCH!"
+    return <button onClick={(e) => handleClick(e)}>Click me</button>
+}
+
+export default Button
+
+
+onDoubleClick used instead of onClick if two clicks required
+
+
+//useState() hook
+
+Example 1
+
+import React, {useState} from 'react'
+
+function MyComponent() {
+    const [name, setName] = useState() #it is possible to write a default state in the brackets
+
+    const handleSetName = () => {
+        setName("Riza")
+    }
+
+
+    return (
+        <div>
+            {name} is a student <br></br>
+            <br></br><button onClick={handleSetName}>Set Name</button>
+        </div>
+    )
+}
+
+export default MyComponent
+
+Example 2
+
+import React, {useState} from 'react'
+
+function MyComponent() {
+    const [name, setName] = useState("Guest")
+    const [age, incrementAge] = useState(22)
+
+    const handleSetName = () => {
+        setName("Riza")
+    }
+
+    const HandleSetAge = () => {
+        incrementAge(age + 1)
+    }
+
+
+    return (
+        <div>
+            {name} is a student and he is {age} years old<br></br>
+            <br></br><button onClick={handleSetName}>Set Name</button>
+            <br></br><button onClick={HandleSetAge}>Set Age</button>
+        </div>
+    )
+}
+
+export default MyComponent
+
+Example 3
+
+import React, {useState} from 'react'
+
+function MyComponent() {
+    const [name, setName] = useState("Guest")
+    const [age, incrementAge] = useState(22)
+    const [isEmployed, setisEmployed] = useState(false)
+
+    const handleSetName = () => {
+        setName("Riza")
+    }
+
+    const HandleSetAge = () => {
+        incrementAge(age + 1)
+    }
+
+    const HandlesetisImplyed = () => {
+        setisEmployed(!isEmployed)
+    }
+
+
+    return (
+        <div>
+            {name} is a studen. He is {age} years old and he is {isEmployed ? "is employed" : "is not employed"}<br></br>
+            <br></br><button onClick={handleSetName}>Set Name</button>
+            <br></br><button onClick={HandleSetAge}>Set Age</button>
+            <br></br><button onClick={HandlesetisImplyed}>Set isEmployed</button>
+        </div>
+    )
+}
+
+export default MyComponent
