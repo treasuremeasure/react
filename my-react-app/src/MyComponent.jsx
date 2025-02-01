@@ -1,29 +1,16 @@
 import React, {useState} from 'react'
 
 function MyComponent() {
-    const [name, setName] = useState("Guest")
-    const [age, incrementAge] = useState(22)
-    const [isEmployed, setisEmployed] = useState(false)
+    const [name, setName] = useState()
 
-    const handleSetName = () => {
-        setName("Riza")
+    function handleNameChange() {
+        setName(event.target.value)
     }
-
-    const HandleSetAge = () => {
-        incrementAge(age + 1)
-    }
-
-    const HandlesetisImplyed = () => {
-        setisEmployed(!isEmployed)
-    }
-
 
     return (
         <div>
-            {name} is a studen. He is {age} years old and he is {isEmployed ? "is employed" : "is not employed"}<br></br>
-            <br></br><button onClick={handleSetName}>Set Name</button>
-            <br></br><button onClick={HandleSetAge}>Set Age</button>
-            <br></br><button onClick={HandlesetisImplyed}>Set isEmployed</button>
+            <input value={name} onChange={handleNameChange}/>
+            <p>Name: {name}</p> 
         </div>
     )
 }
