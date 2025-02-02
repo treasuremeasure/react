@@ -500,3 +500,83 @@ function Counter() {
 
 export default Counter
 
+
+//OnChange - event handler used primarily with from elements
+             ex. <input>, <select>, <textArea>, <radio>
+             Triggers a function every time the value of the input changes
+
+
+
+//basically when any change happens in the form, browser creates an event which then is passed 
+  to handler function which sets the value to the stateful variable
+
+
+import React, {useState} from 'react'
+
+function MyComponent() {
+
+    const [name, setName] = useState("")
+    const [quantity, setQuantity] = useState(1)
+    const [comment, setComment] = useState()
+    const [payment, setPayment] = useState()
+
+    function handleNameChange(event) {
+        setName(event.target.value);
+    }
+
+    function handleQuantityChange(event) {
+        setQuantity(event.target.value)
+    }
+
+    function handleCommentChange(event) {
+        setComment(event.target.value)
+    }
+
+    function handlePaymentChange(event) {
+        setPayment(event.target.value)
+    }
+    
+    return (<div>
+                <input value={name} onChange={handleNameChange}></input>
+                <p>Name: {name}</p>
+                <input value={quantity} onChange={handleQuantityChange} type='number'></input>
+                <p>Quantity: {quantity}</p>
+                <textarea value={comment} onChange={handleCommentChange}></textarea>
+                <p>Text Area: {comment}</p>
+                <select value={payment} onChange={handlePaymentChange}>
+                    <option value=''>Select an option</option>
+                    <option value='Visa'>Visa</option>
+                    <option value='Mastercard'>Mastercard</option>
+                    <option value='GiftCard'>Gi ftCard</option>
+                </select>
+                <p>Payment: {payment}</p>
+            </div>)
+}
+
+export default MyComponent
+
+
+//Color Picker program
+
+import React, {useState} from "react"
+
+function ColorPickerApp() {
+
+    const [color, stateColor] = useState("");
+
+    function handleColorChange(event) {
+        stateColor(event.target.value);
+    }
+
+    return (<div className="colorPickerContainer">
+
+            <h1>Color Picker</h1>
+            <div className="colorDisplay" style={{backgroundColor: color}}>
+                <p>Selected color: {color}</p>
+            </div>
+            <label>Select a color:</label>
+            <input type="color" value={color} onChange={handleColorChange}></input>
+            </div>)
+}
+
+export default ColorPickerApp
