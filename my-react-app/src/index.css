@@ -54,7 +54,7 @@ input[type="text"] {
     border: 2px solid hsl(0, 0%, 80%, 0.5);
     border-radius: 5px;
     color: hsl(0, 0%, 0%, 0.5);
-
+    margin-bottom: 50px;
 }
 
 ol {
