@@ -2,16 +2,34 @@ import React, {useState, useEffect} from "react"
 
 function MyComponent() {
 
-    const [count, setCount] = useState(0)
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
 
     useEffect(() => {
-        document.title = `Count: ${count}`
-    }, [])
+        window.addEventListener(`resize`, handleResize);
+        console.log(`EVENT LISTENER ADDED`)
+
+        return () => {
+            window.removeEventListener('resize', handleResize)
+            console.log(`EVENT LISTENER REMOVED`)
+        }
+    }) 
+
+    useEffect(() => {
+        document.title = `Size: ${width}x${height}`;
+    }, [width, height] 
+    )
+
+
+    function handleResize() {
+        setWidth(window.innerWidth)
+        setHeight(window.innerHeight)
+    }
 
     return (
         <>
-            <h2>Count: {count}</h2>
-            <button onClick={() => setCount(prevCount => prevCount + 1)}>Add count</button>
+        <p>Window width: {width}px </p>
+        <p>Window height: {height}px </p>
         </>
     )
 }
